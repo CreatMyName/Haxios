@@ -2,7 +2,7 @@
  * @Author: 侯志伟
  * @Date: 2018-11-13 16:05:57
  * @Last Modified by: hou
- * @Last Modified time: 2020-06-22 10:55:37
+ * @Last Modified time: 2020-07-04 15:49:19
  */
 import config from './config/Haxios.config'
 import axios from 'axios'
@@ -82,7 +82,7 @@ class HttpRequest {
           'failureHandle' in config && typeof config.failureHandle === 'function' ? handleBack = config.failureHandle(respones.data) : null
           /** 不处理handleBack为true的后续 */
           if (handleBack) {
-            return Promise.reject(respones.data.message)
+            return Promise.reject(respones.data)
           }
           /** 报错提示拦截 */
           const ismsg = config.repMsgIntercept.some(i => {
@@ -93,10 +93,10 @@ class HttpRequest {
           }
           /** 消息提示 */
           'failureMsg' in config && typeof config.failureMsg === 'function' ? config.failureMsg(respones.data) : null
-          return Promise.reject(respones.data.message)
+          return Promise.reject(respones.data)
         }
         /** 正常请求 */
-        return respones.data.result
+        return config.dataKey ? respones.data[config.dataKey] : respones.data
       },
       error => {
         loading && 'loadingClose' in config && typeof config.loadingClose === 'function' ? config.loadingClose(loading) : null

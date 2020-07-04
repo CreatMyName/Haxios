@@ -6,6 +6,10 @@ export default {
   stateKey: `code`,
   /** 唯一成功的状态值 */
   realCode: '0',
+  /** 数据存放在响应的result字段 */
+  dataKey: 'result',
+  /** 返回消息在响应的message字段内 */
+  messageKey: 'message',
   /** 加载动画拦截器 写入接口地址则不加载动画 */
   loadingIntercept: [
     `/auth/login/captcha_img`,
@@ -28,6 +32,7 @@ export default {
   /** 自定义加载动画关闭 */
   loadingClose: loading => {
     /** loading为 loadAnimation return出来的值*/
+    /** 可能此处可关闭laoding动画 */
   },
   /** 自定义异常响应提示 */
   failureMsg: response => {
